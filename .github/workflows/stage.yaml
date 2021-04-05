@@ -4,21 +4,27 @@ jobs:
   stage:
     runs-on: ubuntu-latest
     steps:
-      - name: ls-test
-        run: |
-          ls
-          pwd
       - name: build
         run: |
-          git clone https://github.com/SrsSec/SrsPass-pwa.git
+          cd /tmp
+          git clone https://github.com/SrsSec/SrsPass-pwa.git --depth 1
           cd SrsPass-pwa
           npm ci
           npm run build
           ls
+      - uses: actions/checkout@v1
       - name: commit & stage build
+        env:
+          BRANCH: stage
         run: |
-          ls
+          ls -alh
           pwd
-          cd
-          ls
-          pwd
+          git config user.email "github+CHAPPiE@srssec.com"
+          git config user.name "SrsSec-CHAPPiE"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
+          git checkout --orphan "$BRANCH"
+          git reset --hard
+          cp -a /tmp/SrsPass-pwa/dist/. .
+          git add .
+          git commit -m "stage: update"
+          git push origin "$BRANCH"
