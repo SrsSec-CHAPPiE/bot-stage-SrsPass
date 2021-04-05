@@ -4,6 +4,10 @@ jobs:
   stage:
     runs-on: ubuntu-latest
     steps:
+      - name: ls-test
+        run: |
+          ls
+          pwd
       - name: build
         run: |
           git clone https://github.com/SrsSec/SrsPass-pwa.git
@@ -11,3 +15,10 @@ jobs:
           npm ci
           npm run build
           ls
+      - name: commit & stage build
+        run: |
+          ls
+          pwd
+          cd
+          ls
+          pwd
