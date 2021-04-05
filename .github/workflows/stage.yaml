@@ -1,7 +1,13 @@
 on:
   workflow_dispatch
 jobs:
-  demo:
+  stage:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "hello world"
+      - name: build
+        run: |
+          git clone https://github.com/SrsSec/SrsPass-pwa.git
+          cd SrsPass-pwa
+          npm ci
+          npm run build
+          ls
