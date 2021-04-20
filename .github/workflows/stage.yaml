@@ -11,7 +11,7 @@ jobs:
           cd SrsPass-pwa
           npm ci
           npm run build
-          git rev-parse --short HEAD | tr =d '\n' > dist/GIT_HASH
+          git rev-parse --short HEAD | tr -d '\n' > dist/GIT_HASH
       - uses: actions/checkout@v1
       - name: commit & stage build
         env:
